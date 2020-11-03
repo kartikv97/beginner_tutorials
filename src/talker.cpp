@@ -8,39 +8,32 @@
  *
  * @section LICENSE
  *
- * BSD 3-Clause License
- *
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- * Neither the name of the copyright holder nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * MIT License
+
  * @section DESCRIPTION:
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
+#include <beginner_tutorials/UpdateString.h>
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
+std::string updatedWord = "This is the default string:";
 
+
+/**
+ * @brief Callback service to update string
+ * @param request
+ * @param response
+ * @return
+ */
+bool updateString(beginner_tutorials::UpdateString::Request& request,
+                  beginner_tutorials::UpdateString::Response& response) {
+  updatedWord = request.newString;
+  ROS_WARN_STREAM("The message being published has been updated");
+  response.updatedString = updatedWord;
+  return true;
+}
 
 
 int main(int argc, char **argv) {
@@ -81,8 +74,16 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  ros::ServiceServer server = n.advertiseService("UpdateString", updateString);
 
-  ros::Rate loop_rate(10);
+  double publish_freq = atof(argv[1]);
+  if (publish_freq < 0) {
+    ROS_ERROR_STREAM("The values of publish frequency cannot be negative");
+    publish_freq = 5;   // Minimum publish frequency
+  }
+
+  ros::Rate loop_rate(publish_freq);
+  ROS_DEBUG_STREAM("current publish frequency:" << publish_freq);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -96,10 +97,12 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << " This is the first ROS Assignment. " << count;
+//    ss << " This is the first ROS Assignment. " << count;
+    ROS_DEBUG_STREAM("current count:" << count);
+    ss << updatedWord << count;
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM("%s" << msg.data.c_str());
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -115,6 +118,6 @@ int main(int argc, char **argv) {
     ++count;
   }
 
-
+  ROS_FATAL_STREAM("ROS service Terminated");
   return 0;
 }
