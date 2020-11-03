@@ -40,4 +40,18 @@ Open a new terminal and run the commands given below:
   source ./devel/setup.bash
   rosrun beginner_tutorials listener
 ```
+<<<<<<< HEAD
 To stop the program press Ctrl + c in each terminal 
+=======
+
+4. Open terminal 4 and run (to update string):
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  // execute one of the statement from terminal 2 or 3 above before executing the statements in this terminal. 
+  rosservice call /UpdateString "This is the updated string:"
+```
+To stop the program press Ctrl + c in each terminal 
+
+
+>>>>>>> Week9_HW
