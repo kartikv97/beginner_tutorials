@@ -31,18 +31,15 @@ Open a new terminal and run the commands given below:
 ```
   cd ~/catkin_ws
   source ./devel/setup.bash
-  rosrun beginner_tutorials talker
+  roslaunch beginner_tutorials talkerListener.launch frequency:=7
 ```
   
-3. Open terminal 3 and run:
+3. Open terminal 3 and run (use default publish frequency):
 ```
   cd ~/catkin_ws
   source ./devel/setup.bash
-  rosrun beginner_tutorials listener
+  roslaunch beginner_tutorials talkerListener.launch
 ```
-<<<<<<< HEAD
-To stop the program press Ctrl + c in each terminal 
-=======
 
 4. Open terminal 4 and run (to update string):
 ```
@@ -54,4 +51,3 @@ To stop the program press Ctrl + c in each terminal
 To stop the program press Ctrl + c in each terminal 
 
 
->>>>>>> Week9_HW
