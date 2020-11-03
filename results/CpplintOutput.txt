@@ -3,3 +3,11 @@ Command: cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build
 
 Done processing ./src/listener.cpp
 Done processing ./src/talker.cpp
+Done processing ./src/listener.cpp
+Done processing ./src/talker.cpp
+Done processing ./src/listener.cpp
+Done processing ./src/talker.cpp
+Total errors found: 4
+Done processing ./src/listener.cpp
+Done processing ./src/talker.cpp
+Total errors found: 3
