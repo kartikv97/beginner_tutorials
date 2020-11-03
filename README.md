@@ -31,23 +31,13 @@ Open a new terminal and run the commands given below:
 ```
   cd ~/catkin_ws
   source ./devel/setup.bash
-  roslaunch beginner_tutorials talkerListener.launch frequency:=7
+  rosrun beginner_tutorials talker
 ```
   
-3. Open terminal 3 and run (use default publish frequency):
+3. Open terminal 3 and run:
 ```
   cd ~/catkin_ws
   source ./devel/setup.bash
-  roslaunch beginner_tutorials talkerListener.launch
-```
-
-4. Open terminal 4 and run (to update string):
-```
-  cd ~/catkin_ws
-  source ./devel/setup.bash
-  // execute one of the statement from terminal 2 or 3 above before executing the statements in this terminal. 
-  rosservice call /UpdateString "This is the updated string"
+  rosrun beginner_tutorials listener
 ```
 To stop the program press Ctrl + c in each terminal 
-
-
