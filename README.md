@@ -46,7 +46,7 @@ Open a new terminal and run the commands given below:
   cd ~/catkin_ws
   source ./devel/setup.bash
   // execute one of the statement from terminal 2 or 3 above before executing the statements in this terminal. 
-  rosservice call /UpdateString "This is the updated string"
+  rosservice call /UpdateString "This is the updated string:"
 ```
 To stop the program press Ctrl + c in each terminal 
 
