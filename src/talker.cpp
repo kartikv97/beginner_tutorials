@@ -18,6 +18,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "tf/transform_broadcaster.h"
+#include "beginner_tutorials/UpdateString.h"
 
 std::string updatedWord = "This is the default string:";
 
@@ -103,7 +104,7 @@ int main(int argc, char **argv) {
   ROS_DEBUG_STREAM("current publish frequency:" << publish_freq);
 
   /**
-   * A count of how many messages we have sent. This is used to create
+   * @brief A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
   int count = 0;
