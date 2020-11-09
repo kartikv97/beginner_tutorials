@@ -1,5 +1,8 @@
 <launch>
   <arg name="publish_freq" default="5" />
+  <arg name="startRosBagRec" default="false" />
   <node pkg="beginner_tutorials" name="talker" type="talker" args="$(arg publish_freq)" output="screen"/>
   <node pkg="beginner_tutorials" name="listener" type="listener" output="screen"/>
+  <node pkg="rosbag" name="rosbag_record_all" type="record" respawn="true" output="screen"
+        args="-a -O $(find beginner_tutorials)/results/beginner_tutorials.bag" if="$(arg startRosBagRec)"/>
 </launch>
