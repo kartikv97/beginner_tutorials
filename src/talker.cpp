@@ -17,6 +17,7 @@
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "tf/transform_broadcaster.h"
 
 std::string updatedWord = "This is the default string:";
 
@@ -25,7 +26,7 @@ std::string updatedWord = "This is the default string:";
  * @brief Callback service to update string
  * @param request
  * @param response
- * @return
+ * @return None
  */
 bool updateString(beginner_tutorials::UpdateString::Request& request,
                   beginner_tutorials::UpdateString::Response& response) {
@@ -33,6 +34,22 @@ bool updateString(beginner_tutorials::UpdateString::Request& request,
   ROS_WARN_STREAM("The message being published has been updated");
   response.updatedString = updatedWord;
   return true;
+}
+
+/**
+ * @brief Callback service to broadcast a TF frame
+ * /talk with the parent /world.
+ * @param None
+ * @return None
+ */
+void poseCallback(){
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+  transform.setOrigin( tf::Vector3(25.0, 50.0 , 15.0) );
+  tf::Quaternion q;
+  q.setRPY(2, 5, 10);
+  transform.setRotation(q);
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 }
 
 
@@ -111,6 +128,11 @@ int main(int argc, char **argv) {
      * in the constructor above.
      */
     chatter_pub.publish(msg);
+
+    /**
+     * The poseCallback function is called to broadcast the tf frame.
+     */
+    poseCallback();
 
     ros::spinOnce();
 
