@@ -18,7 +18,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "tf/transform_broadcaster.h"
-#include "beginner_tutorials/UpdateString.h"
+
 
 std::string updatedWord = "This is the default string:";
 
@@ -43,14 +43,16 @@ bool updateString(beginner_tutorials::UpdateString::Request& request,
  * @param None
  * @return None
  */
-void poseCallback(){
+void poseCallback() {
   static tf::TransformBroadcaster br;
   tf::Transform transform;
-  transform.setOrigin( tf::Vector3(25.0, 50.0 , 15.0) );
+  transform.setOrigin(tf::Vector3(25.0, 50.0 , 15.0));
   tf::Quaternion q;
   q.setRPY(2, 5, 10);
   transform.setRotation(q);
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+  br.sendTransform(tf::StampedTransform(transform,
+                                        ros::Time::now(),
+                                        "world", "talk"));
 }
 
 
