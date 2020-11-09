@@ -19,6 +19,8 @@ cd ~/catkin_ws
 source ./devel/setup.bash
 catkin_make
 ```
+
+## Run launch file
 Open a new terminal and run the commands given below:
 
 1. Open terminal 1 and run:
@@ -50,4 +52,78 @@ Open a new terminal and run the commands given below:
 ```
 To stop the program press Ctrl + c in each terminal 
 
+## Verify TF frames 
 
+Open a new terminal and run the commands given below:
+
+1. Open terminal 1 and run: (talker node publishes tf frame /talk wrt. the parent /world)
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  rosrun rqt_tf_tree rqt_tf_tree
+```  
+2. Open terminal 2 and run: (The following command is used to echo the values.)
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  rosrun tf tf_echo /world /talk
+```
+3. Open terminal 3 and run: (view_frames creates a diagram of the frames being broadcast by tf over ROS. The generated pdf file is viewed using the evince command.)
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  rosrun tf view_frames
+  evince frames.pdf
+```
+## Run Ros Unit Tests
+Open a new terminal and run the commands given below:
+
+1. Open terminal 1 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  roscore
+```  
+2. Open terminal 2 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  rostest beginner_tutorials test.launch
+```
+## Record bag file
+Open a new terminal and run the commands given below:
+
+1. Open terminal 1 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  roscore
+```  
+2. Open terminal 2 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  roslaunch beginner_tutorials talkerListener.launch startRosBagRec:=true
+```
+## Play bag file
+Open a new terminal and run the commands given below:
+
+1. Open terminal 1 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  roscore
+```  
+2. Open terminal 2 and run:
+```
+  cd ~/catkin_ws
+  source ./devel/setup.bash
+  rosrun beginner_tutorials listener
+```
+3. Open terminal 3 and run:
+```
+  cd ~/catkin_ws/src/beginner_tutorials/results
+  source ./devel/setup.bash
+  rosbag play beginner_tutorials.bag
+```
+  
